@@ -1,12 +1,11 @@
 # Somewhere to Nothing
 
 A compass for the Nothing Phone (3) that points to the nearest physical Nothing store and
-tells you how far away it is. In London that's a short walk to Soho. Almost anywhere else,
-it's a very long way.
+tells you how far away it is.
 
-It lives in three places:
+It lives in:
 
-- **Home-screen widget**, in two sizes. 2×2: the arrow and the distance. 4×2: adds the store,
+- **Home-screen widget**, in two sizes. 2×2: showing the direction and distance. 4×2: adds the store,
   whether it's open now, and the compass direction. On the widget, the top is north, like a map.
 - **The app**: a full-screen compass whose arrow turns as you turn, with a button for directions.
   Tap the title at the top for a short note on what it all means.
@@ -17,8 +16,6 @@ It lives in three places:
 When you're within 50 m, it says **YOU'RE SOMEWHERE**.
 
 ## Getting the app onto your phone
-
-Every push to `main` builds the app in the cloud (GitHub Actions) and publishes it as a release.
 
 1. On your phone, open **Releases → Latest** on this repo's GitHub page.
 2. Tap **somewhere-to-nothing.apk** to download it.
@@ -42,7 +39,7 @@ Then:
 | `Heading.kt` | Which way the phone is pointing (compass sensor). |
 | `Dots.kt` | The dot-matrix numbers (single-dot decimal point, three-dot comma) and the Glyph Matrix shape. |
 | `Art.kt` | Draws the compass, numbers and labels, for the widget and the app. |
-| `CompassWidget.kt` | The home-screen widgets. |
+| `CompassWidget.kt` | The home screen widgets. |
 | `CompassActivity.kt` / `CompassView.kt` | The full-screen compass, and the About card you get by tapping the title. |
 | `AboutViews.kt` | The dotted "One job." heading and little arrow on the About card. |
 | `MatrixArt.kt` / `CompassToyService.kt` | The Glyph Toy. |
