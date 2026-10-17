@@ -49,6 +49,11 @@ different weekday hours (11–18 and 10–19); the code uses 11–18, which matc
 - **Full screen** (`CompassActivity` + `CompassView`): live heading from `Heading`
   (rotation vector + magnetic declination). Arrow = bearing − heading; white ring dot = north.
   Directions button opens Google Maps (walking if under 5 km).
+  Tapping the title opens the About card (owner picked "option C, floating card"): an invisible
+  `title_tap` view is placed over the drawn title so the title itself looks unchanged. Card text is
+  in `strings.xml` (`about_*`) and was written by the owner, so keep it word for word unless asked.
+  The "One job." heading is dot-matrix (`DotTextView`), which is why `DotFont.LARGE` has a few
+  lower-case letters.
 - **Glyph Toy** (`CompassToyService`, `MatrixArt`): edge block points to the store, live for
   60 s after a Glyph Button touch or while the screen is on, then a still frame. Needle from the
   centre within 2 km. Pulse speeds up with closeness (`MatrixArt.periodFor`: 3 s far → 0.6 s near).

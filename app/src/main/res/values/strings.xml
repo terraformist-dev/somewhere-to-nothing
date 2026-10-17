@@ -7,4 +7,12 @@
     <string name="toy_summary">A compass to the nearest Nothing store. Long-press for the distance.</string>
     <string name="widget_help">LET THE WIDGET UPDATE ON ITS OWN</string>
     <string name="directions">DIRECTIONS</string>
+    <string name="about_open">What is this app?</string>
+    <string name="about_close">Close</string>
+    <string name="about_headline">One job.</string>
+    <string name="about_line1">A compass that gets you to the nearest Nothing store.</string>
+    <string name="about_line2">Once you\'re within 50 metres it\'ll tell you you\'re somewhere.</string>
+    <string name="about_tips">WIDGET: THE TOP IS NORTH\nGLYPH: LONG PRESS FOR THE DISTANCE</string>
+    <string name="about_signoff">Made by a fan. Nothing to do with Nothing.</string>
+    <string name="about_ok">OK</string>
 </resources>

@@ -139,6 +139,12 @@ object Art {
         return textPaint.measureText(text)
     }
 
+    fun capHeight(context: Context, size: Float, isBold: Boolean = false): Float {
+        setUpText(context, size, isBold, WHITE)
+        textPaint.getTextBounds("H", 0, 1, bounds)
+        return bounds.height().toFloat()
+    }
+
     /** Draws [text] with its capital letters' top at [top]. Shrinks it to fit [maxWidth]. Returns the cap height. */
     fun label(
         context: Context,

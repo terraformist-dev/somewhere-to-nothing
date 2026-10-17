@@ -16,7 +16,10 @@ class Sprite(vararg rows: String) {
  */
 class DotFont(val height: Int, private val glyphs: Map<Char, Sprite>) {
 
-    fun glyph(ch: Char): Sprite? = glyphs[ch.uppercaseChar()]
+    fun glyph(ch: Char): Sprite? = glyphs[ch] ?: glyphs[ch.uppercaseChar()]
+
+    /** Rows needed for [text], including any letters (j, the comma) that hang below the baseline. */
+    fun rows(text: String): Int = maxOf(height, text.maxOfOrNull { glyph(it)?.height ?: 0 } ?: 0)
 
     /** Width in dots of [text], including the gaps between characters. */
     fun width(text: String): Int {
@@ -69,6 +72,12 @@ class DotFont(val height: Int, private val glyphs: Map<Char, Sprite>) {
                 'U' to g("#...#", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."),
                 'W' to g("#...#", "#...#", "#...#", "#.#.#", "#.#.#", "##.##", "#...#"),
                 'Y' to g("#...#", "#...#", ".#.#.", "..#..", "..#..", "..#..", "..#.."),
+                // Lower case for the "One job." heading; j hangs two rows below the baseline.
+                'b' to g("#....", "#....", "####.", "#...#", "#...#", "#...#", "####."),
+                'e' to g(".....", ".....", ".###.", "#...#", "#####", "#....", ".###."),
+                'j' to g("...#", "....", "..##", "...#", "...#", "...#", "...#", "#..#", ".##."),
+                'n' to g(".....", ".....", "####.", "#...#", "#...#", "#...#", "#...#"),
+                'o' to g(".....", ".....", ".###.", "#...#", "#...#", "#...#", ".###."),
             ),
         )
 

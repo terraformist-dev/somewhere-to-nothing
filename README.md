@@ -9,6 +9,7 @@ It lives in three places:
 - **Home-screen widget**, in two sizes. 2×2: the arrow and the distance. 4×2: adds the store,
   whether it's open now, and the compass direction. On the widget, the top is north, like a map.
 - **The app**: a full-screen compass whose arrow turns as you turn, with a button for directions.
+  Tap the title at the top for a short note on what it all means.
 - **Glyph Toy**: on the Glyph Matrix on the back. A block of dots on the edge points to the
   store and pulses faster as you get closer. Within 2 km a needle joins it to the centre.
   Long-press the Glyph Button to see the distance in numbers.
@@ -42,7 +43,8 @@ Then:
 | `Dots.kt` | The dot-matrix numbers (single-dot decimal point, three-dot comma) and the Glyph Matrix shape. |
 | `Art.kt` | Draws the compass, numbers and labels, for the widget and the app. |
 | `CompassWidget.kt` | The home-screen widgets. |
-| `CompassActivity.kt` / `CompassView.kt` | The full-screen compass. |
+| `CompassActivity.kt` / `CompassView.kt` | The full-screen compass, and the About card you get by tapping the title. |
+| `AboutViews.kt` | The dotted "One job." heading and little arrow on the About card. |
 | `MatrixArt.kt` / `CompassToyService.kt` | The Glyph Toy. |
 
 The Glyph Matrix SDK (`app/libs/glyph-matrix-sdk-2.0.aar`) is from

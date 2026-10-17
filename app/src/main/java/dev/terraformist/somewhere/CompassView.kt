@@ -22,6 +22,14 @@ class CompassView @JvmOverloads constructor(
     /** Which way the top of the screen faces (degrees from north), or null if unknown. */
     var heading: Double? = null
 
+    /** Where the title sits (centre and width, in this view's pixels), so a tap area can be put on it. */
+    fun titleCenterY(): Float {
+        val u = width / 390f
+        return 40f * u + Art.capHeight(context, 11f * u) / 2f
+    }
+
+    fun titleWidth(): Float = Art.textWidth(context, TITLE, 11f * (width / 390f))
+
     fun update() {
         contentDescription = Art.describe(reading, mode)
         invalidate()
@@ -34,7 +42,7 @@ class CompassView @JvmOverloads constructor(
         val cx = w / 2f
 
         var y = 40f * u
-        Art.label(context, canvas, "SOMEWHERE TO NOTHING", cx, y, 11f * u, Art.GREY, centered = true)
+        Art.label(context, canvas, TITLE, cx, y, 11f * u, Art.GREY, centered = true)
         y += 11f * u + 48f * u
 
         // Leave room at the bottom for the buttons.
@@ -86,5 +94,9 @@ class CompassView @JvmOverloads constructor(
         if (!r.far) parts += if (open) "OPEN NOW" else "CLOSED NOW"
         val line = parts.joinToString("  /  ")
         Art.label(context, canvas, line, cx, y, 12f * u, Art.WHITE, maxWidth = room, centered = true)
+    }
+
+    private companion object {
+        const val TITLE = "SOMEWHERE TO NOTHING"
     }
 }
