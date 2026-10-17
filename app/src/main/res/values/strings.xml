@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Somewhere to Nothing</string>
+    <string name="widget_small_description">Arrow and distance to the nearest Nothing store</string>
+    <string name="widget_wide_description">Arrow, distance, store and opening status</string>
+    <string name="toy_name">Somewhere to Nothing</string>
+    <string name="toy_summary">A compass to the nearest Nothing store. Long-press for the distance.</string>
+    <string name="widget_help">LET THE WIDGET UPDATE ON ITS OWN</string>
+    <string name="directions">DIRECTIONS</string>
+</resources>
