@@ -39,6 +39,66 @@ object MatrixArt {
         return grid
     }
 
+    // ---------- Switch-on ----------
+
+    /** How long the switch-on lasts. After this, [render] takes over. */
+    const val INTRO_MS = 1_050L
+    private const val ALL_ON_MS = 120L
+    private const val DISSOLVE_MS = 570L
+    private const val BEAT_MS = 720L
+
+    /**
+     * Played once when you switch to this toy, so it's recognisable among the other Somewhere toys:
+     * everything (the whole matrix lit) dissolves from the edges in to nothing (one centre dot),
+     * which then shoots out to somewhere (the edge facing the store), where the pointer takes over.
+     * If you've arrived, the dot opens into the arrival ring instead. No position yet: it stays a dot.
+     */
+    fun intro(reading: Reading?, angle: Double, elapsedMs: Long): DotGrid {
+        val grid = DotGrid(GlyphShape.SIZE, GlyphShape.SIZE)
+        val t = elapsedMs.coerceIn(0L, INTRO_MS)
+        when {
+            t < DISSOLVE_MS -> {
+                for (y in 0 until GlyphShape.SIZE) for (x in 0 until GlyphShape.SIZE) {
+                    if (GlyphShape.contains(x, y) && t < switchOffAt(x, y)) grid.set(x, y, 255)
+                }
+            }
+            t >= BEAT_MS && reading != null -> {
+                val p = smooth((t - BEAT_MS).toDouble() / (INTRO_MS - BEAT_MS))
+                if (reading.arrived) {
+                    val r = p * 11.6
+                    for (y in 0 until GlyphShape.SIZE) for (x in 0 until GlyphShape.SIZE) {
+                        if (kotlin.math.abs(radius(x, y) - r) <= 0.7) grid.set(x, y, 255)
+                    }
+                } else {
+                    val a = Math.toRadians(angle)
+                    // The dot, with a short fading tail behind it.
+                    for ((back, level) in listOf(0.0 to 255, 1.0 to 140, 2.0 to 60)) {
+                        val d = p * TIP_RADIUS - back
+                        if (d < 0) continue
+                        val x = Math.round(C + d * sin(a)).toInt()
+                        val y = Math.round(C - d * cos(a)).toInt()
+                        grid.lift(x, y, level)
+                    }
+                }
+            }
+        }
+        grid.lift(12, 12, 255)
+        return grid
+    }
+
+    /** When each dot goes dark in the dissolve: all on at first, then outer dots first, with a little scatter. */
+    fun switchOffAt(x: Int, y: Int): Long {
+        val outside = (radius(x, y) / 12.7).coerceIn(0.0, 1.0)
+        val scatter = ((x * 37 + y * 61) % 11 - 5) * 14
+        val span = (DISSOLVE_MS - ALL_ON_MS) * 0.85
+        return maxOf(ALL_ON_MS, ALL_ON_MS + (span * (1 - outside)).toLong() + scatter)
+    }
+
+    private fun smooth(t: Double): Double {
+        val c = t.coerceIn(0.0, 1.0)
+        return c * c * (3 - 2 * c)
+    }
+
     private fun distance(grid: DotGrid, reading: Reading) {
         val d = reading.distance
         val font = DotFont.SMALL

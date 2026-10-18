@@ -11,7 +11,8 @@ It lives in:
   Tap the title at the top for a short note on what it all means.
 - **Glyph Toy**: on the Glyph Matrix on the back. A block of dots on the edge points to the
   store and pulses faster as you get closer. Within 2 km a needle joins it to the centre.
-  Long-press the Glyph Button to see the distance in numbers.
+  Long-press the Glyph Button to see the distance in numbers. When you switch to it, the whole
+  matrix lights up, fades away to a single dot, and the dot shoots off towards the store.
 
 When you're within 50 m, it says **YOU'RE SOMEWHERE**.
 

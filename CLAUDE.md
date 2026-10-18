@@ -58,6 +58,10 @@ different weekday hours (11–18 and 10–19); the code uses 11–18, which matc
   60 s after a Glyph Button touch or while the screen is on, then a still frame. Needle from the
   centre within 2 km. Pulse speeds up with closeness (`MatrixArt.periodFor`: 3 s far → 0.6 s near).
   Long-press shows the distance for 4 s. `Facing.BACK`: held upright, "up" means the way you face.
+  **Switch-on** (`MatrixArt.intro`, ~1 s, plays once when the toy is picked): "everything → nothing →
+  somewhere": whole matrix lit, dissolves edges-inward to one centre dot, pause, dot shoots out to the
+  store's edge (or opens into the arrival ring). The owner asked for a switch-on that tells this toy
+  apart from the other Somewhere toys while cycling; give each sibling its own, never this one.
 
 ## Glyph Matrix SDK 2.0 (same .aar as Glyph Pet, verified there)
 

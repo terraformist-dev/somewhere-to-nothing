@@ -51,6 +51,9 @@ class CompassToyService : Service() {
     private var distanceUntil = 0L
     private var alwaysOn = false
 
+    /** When the switch-on animation started (when this toy was picked). */
+    private var introAt = 0L
+
     private val tick = object : Runnable {
         override fun run() {
             val now = System.currentTimeMillis()
@@ -113,6 +116,7 @@ class CompassToyService : Service() {
                 manager.register(Glyph.DEVICE_23112)
                 connected = true
                 Where.refresh(applicationContext) { location -> location?.let { heading.setLocation(it) } }
+                introAt = System.currentTimeMillis()
                 liveFor(LIVE_MS)
             }
 
@@ -180,14 +184,19 @@ class CompassToyService : Service() {
         val facing = heading.degrees
         // Without a compass reading yet, the top of the matrix stands for north.
         val angle = reading?.let { if (facing != null) it.bearing - facing else it.bearing } ?: 0.0
-        val grid = MatrixArt.render(
-            reading,
-            angle,
-            now,
-            showDistance = now < distanceUntil,
-            still = still,
-            dim = alwaysOn,
-        )
+        val sinceIntro = now - introAt
+        val grid = if (sinceIntro < MatrixArt.INTRO_MS) {
+            MatrixArt.intro(reading, angle, sinceIntro)
+        } else {
+            MatrixArt.render(
+                reading,
+                angle,
+                now,
+                showDistance = now < distanceUntil,
+                still = still,
+                dim = alwaysOn,
+            )
+        }
         val frame = IntArray(GlyphShape.SIZE * GlyphShape.SIZE) { i ->
             val x = i % GlyphShape.SIZE
             val y = i / GlyphShape.SIZE

@@ -108,16 +108,45 @@ def scale(g, k):
     return [[int(v * k) for v in row] for row in g]
 
 
+INTRO_MS, ALL_ON_MS, DISSOLVE_MS, BEAT_MS, TIP = 1050, 120, 570, 720, 10.4
+
+
+def switch_off_at(x, y):
+    outside = min(1.0, math.hypot(x - C, y - C) / 12.7)
+    scatter = ((x * 37 + y * 61) % 11 - 5) * 14
+    span = (DISSOLVE_MS - ALL_ON_MS) * 0.85
+    return max(ALL_ON_MS, ALL_ON_MS + int(span * (1 - outside)) + scatter)
+
+
+def intro(angle, t):
+    """Same as MatrixArt.intro: everything dissolves to nothing, then shoots out to somewhere."""
+    g = empty()
+    if t < DISSOLVE_MS:
+        for y in range(N):
+            for x in range(N):
+                if inside(x, y) and t < switch_off_at(x, y):
+                    g[y][x] = 255
+    elif t >= BEAT_MS:
+        p = smooth(min(1.0, (t - BEAT_MS) / (INTRO_MS - BEAT_MS)))
+        a = math.radians(angle)
+        for back, level in ((0, 255), (1, 140), (2, 60)):
+            d = p * TIP - back
+            if d < 0:
+                continue
+            # Kotlin's Math.round rounds halves up.
+            x, y = math.floor(C + d * math.sin(a) + 0.5), math.floor(C - d * math.cos(a) + 0.5)
+            g[y][x] = max(g[y][x], level)
+    g[12][12] = 255
+    return g
+
+
 def frame(f):
-    """The story, 5 s: turn to find it, long-press for the distance, close in, arrive."""
+    """The story, 5 s: switch on, long-press for the distance, close in, arrive."""
     ms = f * 1000 / FPS
+    if ms < INTRO_MS:
+        return intro(35, ms)
     if f < 45:
-        # Turning the phone: the needle swings round and settles on the store.
-        angle = -70 + 105 * smooth(min(1.0, f / 38))
-        g = pointer(angle, int(255 * pulse(ms, 1200)))
-        if f < 4:  # fade in from the end of the loop
-            g = scale(g, (f + 1) / 5)
-        return g
+        return pointer(35, int(255 * pulse(ms - INTRO_MS, 1200)))
     if f < 85:
         # Long-press: the distance, as on the toy.
         return distance("1.2", "KM")
@@ -128,8 +157,6 @@ def frame(f):
     # Within 50 m: the outer ring pulses.
     level = int(255 * pulse(ms - 118 * 1000 / FPS, 700))
     g = arrived(level)
-    if f >= 145:
-        g = scale(g, (150 - f) / 6)
     return g
 
 
