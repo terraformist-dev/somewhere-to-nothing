@@ -74,3 +74,9 @@ different weekday hours (11–18 and 10–19); the code uses 11–18, which matc
 Location is asked for on first open; everything must still work if refused (shows "TAP TO START").
 "Allow all the time" is optional and only offered by a small text button while it's missing.
 Picker previews and the launcher icon are PNGs in `res/drawable-nodpi/` (drawn to match `Art.kt`).
+
+## Nothing Playground listing
+
+`playground/` holds the community listing assets (512×512 PNG, 5 s 30 fps Lottie JSON, GIF copy)
+drawn by `playground/make_playground_assets.py`, which mirrors `MatrixArt.kt`. If the Glyph Toy's
+look changes, update that script and regenerate. Lottie layout copies GlyphMatrixEditor's Phone (3) export.
